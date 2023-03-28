@@ -26,3 +26,4 @@ dist-ssr
 tmp*
 uploads
 vendor
+mysql_data
