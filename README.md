@@ -1,3 +1,3 @@
-# research_and_development
+# imaginative_research
 
-My R&amp;D on different things
+A repository for my imaginative research across various domains, containing code, notes, and documentation
