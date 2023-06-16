@@ -12,6 +12,8 @@ const createImage = (url) =>
 
 // Copy from "https://codesandbox.io/s/react-easy-crop-demo-with-cropped-output-q8q1mnr01w?from-embed=&file=/src/cropImage.js:0-2289"
 async function getCroppedImg(imageSrc, pixelCrop) {
+    console.log(imageSrc, pixelCrop);
+
     const image = await createImage(imageSrc);
     const canvas = document.createElement("canvas");
     const ctx = canvas.getContext("2d");
@@ -38,7 +40,18 @@ async function getCroppedImg(imageSrc, pixelCrop) {
         Math.round(0 - safeArea / 2 + image.height * 0.5 - pixelCrop.y)
     );
 
-    return canvas.toDataURL("image/jpeg");
+    let format = "";
+
+    for (let i= 11; ; i++) {
+        if (imageSrc[i] === ";") {
+            break;
+        }
+        format += imageSrc[i];
+    }
+
+    console.log(format);
+
+    return canvas.toDataURL(`image/${format}`);
 }
 
 export const cropImage = async (image, croppedAreaPixels, onError) => {

@@ -18,11 +18,39 @@ const ImageUploadingButton = ({ value, onChange, ...props }) => {
     );
 };
 
+function dataURLtoFile(dataURL) {
+    let format = "";
+
+    for (let i = 11; ; i++) {
+        if (dataURL[i] === ";") {
+            break;
+        }
+        format += dataURL[i];
+    }
+
+    const filename = Date.now() + `.${format}`;
+
+    // Extract base64 data
+    const base64Data = dataURL.split(",")[1];
+
+    // Convert base64 to binary
+    const binaryData = atob(base64Data);
+
+    // Create an array buffer from binary data
+    const arrayBuffer = new ArrayBuffer(binaryData.length);
+    const uint8Array = new Uint8Array(arrayBuffer);
+    for (let i = 0; i < binaryData.length; i++) {
+        uint8Array[i] = binaryData.charCodeAt(i);
+    }
+
+    // Create a File object
+    return new File([uint8Array], filename);
+}
 
 export default function App() {
     const [image, setImage] = useState([]);
     const [croppedImage, setCroppedImage] = useState(null);
-    const [dialogOpen, setDialogOpen] = useState(true);
+    const [dialogOpen, setDialogOpen] = useState(false);
 
     return (
         <div className="App">
@@ -38,6 +66,8 @@ export default function App() {
                 image={image.length > 0 && image[0].dataURL}
                 onComplete={(imagePromises) => {
                     imagePromises.then((image) => {
+                        console.log(dataURLtoFile(image));
+
                         setCroppedImage(image);
                         setDialogOpen(false);
                     });
