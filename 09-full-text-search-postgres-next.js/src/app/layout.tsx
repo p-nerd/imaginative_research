@@ -1,6 +1,7 @@
 import "./globals.css";
 
 import type { Metadata } from "next";
+import type { ReactNode } from "react";
 
 import { Inter } from "next/font/google";
 
@@ -13,10 +14,10 @@ export const metadata: Metadata = {
 export default function RootLayout({
     children,
 }: Readonly<{
-    children: React.ReactNode;
+    children: ReactNode;
 }>) {
     return (
-        <html lang="en" className="dark">
+        <html lang="en" className="">
             <body className={inter.className}>{children}</body>
         </html>
     );

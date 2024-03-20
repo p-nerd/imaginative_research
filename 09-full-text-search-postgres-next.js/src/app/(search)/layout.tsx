@@ -3,7 +3,15 @@ import type { ReactNode } from "react";
 import Icons from "@/components/Icons";
 import SearchBar from "./SearchBar";
 
-const SearchLayout = (p: Readonly<{ children: ReactNode }>) => {
+const SearchLayout = (p: {
+    children: ReactNode;
+    searchParams: { [key: string]: string | string[] | undefined };
+}) => {
+    let query = p.searchParams?.q;
+    if (Array.isArray(query) || !query) {
+        query = "";
+    }
+
     return (
         <div className="relative min-h-screen isolate overflow-hidden border-b border-muted-foreground bg-background">
             <svg
@@ -38,7 +46,7 @@ const SearchLayout = (p: Readonly<{ children: ReactNode }>) => {
                         by querying semantically related results.
                     </p>
                     <div className="mx-auto mt-16 w-full max-w-2xl flex flex-col">
-                        <SearchBar />
+                        <SearchBar query={query || ""} />
                         {p.children}
                     </div>
                 </div>
